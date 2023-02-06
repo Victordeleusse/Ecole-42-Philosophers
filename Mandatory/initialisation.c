@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/06 15:36:50 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:42:07 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_init_rules(t_rules_philo *rules, int argc, char **argv)
 	(long)time(&rules->start_time);
 }
 
-void	ft_init_philos_forks(t_philo **philosophes, t_fork **forks, int i, t_rules_philo *rules)
+void	ft_init_philos_forks(t_philo **philosophes, t_fork **forks, t_rules_philo *rules)
 {
 	
 }
@@ -59,7 +59,7 @@ void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, t_rules_phi
 	i = 0;
 	while (i < rules->philo_nb)
 	{
-		ft_init_philos_forks(philosophes[i], forks, i, rules);
+		ft_init_philos_forks(philosophes[i], forks[i], rules);
 		i++;
 	}
 }
