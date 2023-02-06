@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/06 18:25:11 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:12:25 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ long	ft_atol(char *str);
 void	msg_error(char *str);
 
 void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char **argv);
+void	ft_init_philos(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *rules);
+void	ft_generate_philos(t_philo **philosophes, t_fork **forks, t_rules_philo *rules);
 
 
 #endif

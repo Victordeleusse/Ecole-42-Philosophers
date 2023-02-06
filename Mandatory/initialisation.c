@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/06 18:57:44 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:11:53 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,24 @@ void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char *
 	pthread_mutex_init(&(rules->lock_rules), NULL);
 }
 
-void	ft_init_philos_forks(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *rules)
+void	ft_init_philos(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *rules)
 {
 	philosophe->philo_id = id;
 	philosophe->nb_of_meal = 0;
-	philosophe->is_dead = 0;
 	philosophe->last_meal = 0;
-	philosophe->rules = rules;
+	philosophe->is_dead = 0;
+	philosophe->left_fork = &(*forks)[id];
+	philosophe->left_free = 0;
 	if (id == 0)
-	{
-		philosophe->left_fork = &(*forks)[0];
 		philosophe->right_fork = &(*forks)[rules->philo_nb - 1];
-	}
 	else
-	{
-		philosophe->left_fork = &(*forks)[id];
 		philosophe->right_fork = &(*forks)[id - 1];
-	}
-	
+	philosophe->right_free = 0;
+	philosophe->rules = rules;
 }
 
 
-void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, t_rules_philo *rules)
+void	ft_generate_philos(t_philo **philosophes, t_fork **forks, t_rules_philo *rules)
 {
 	int	id;
 	
@@ -80,7 +76,7 @@ void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, t_rules_phi
 	id = 0;
 	while (id < rules->philo_nb)
 	{
-		ft_init_philos_forks(&(*philosophes[id]), forks, id, rules);
+		ft_init_philos(&(*philosophes[id]), forks, id, rules);
 		id++;
 	}
 }
