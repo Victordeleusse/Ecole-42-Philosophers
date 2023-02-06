@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/06 15:17:32 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:36:50 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,29 @@ void	ft_init_rules(t_rules_philo *rules, int argc, char **argv)
 	(long)time(&rules->start_time);
 }
 
-void	ft_generate_philos(t_philo **philosophes, t_fork **forks, t_rules_philo *rules)
+void	ft_init_philos_forks(t_philo **philosophes, t_fork **forks, int i, t_rules_philo *rules)
 {
-	t_philo	*new_philo;
-	t_fork	*new_fork;
-
-	new_philo = (t_philo *)malloc(sizeof(t_philo) * rules->philo_nb);
-	if (!new_philo)
-		msg_error(ERR_GEN_PHILO);
 	
+}
+
+
+void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, t_rules_philo *rules)
+{
+	int	i;
+	
+	*philosophes = (t_philo *)malloc(sizeof(t_philo) * rules->philo_nb);
+	if (!(*philosophes))
+		msg_error(ERR_GEN_PHILO);
+	*forks = (t_fork *)malloc(sizeof(t_fork) * rules->philo_nb);
+	if (!(*forks))
+	{
+		free(*philosophes);
+		msg_error(ERR_GEN_FORK);
+	}
+	i = 0;
+	while (i < rules->philo_nb)
+	{
+		ft_init_philos_forks(philosophes[i], forks, i, rules);
+		i++;
+	}
 }

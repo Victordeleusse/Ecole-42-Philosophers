@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/06 15:13:54 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:26:49 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@
 # define ERR_INPUT "Please, use it as : ./philo number_of_philosophers time_to_die \
 time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
 # define ERR_GEN_PHILO "An error as occured when generation philosopher\n"
+# define ERR_GEN_FORK "An error as occured when generation philosopher\n"
 # define WRONG_DURATION "Wrong entry parameter : please enter a valid duration\n"
 # define WRONG_PHILO "Wrong entry parameter : please enter a valid number of philosophers\n"
 # define WRONG_NB_MEALS "Wrong entry parameter : please enter a valid number of meals\n"
 
 typedef struct s_fork
 {
+	int				fork_id;
 	int				is_used;
 	pthread_mutex_t	lock;
 }t_fork;
