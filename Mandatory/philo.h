@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/06 15:26:49 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:25:11 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,10 @@ typedef struct s_fork
 {
 	int				fork_id;
 	int				is_used;
-	pthread_mutex_t	lock;
+	pthread_mutex_t	lock_fork;
 }t_fork;
 
-
-typedef struct s_rules_philo
-{
-	int		philo_nb;
-	long	time_die;
-	long	time_eat;
-	long	time_slp;
-	int		nb_must_eat;
-	long	start_time;
-	
-}t_rules_philo;
+struct s_rules_philo;
 
 typedef struct s_philo
 {
@@ -56,13 +46,24 @@ typedef struct s_philo
 	int						nb_of_meal;
 	long					last_meal;
 	int						is_dead;
-	struct s_fork			left_fork;
+	struct s_fork			*left_fork;
 	int						left_free;
-	struct s_fork			right_fork;
+	struct s_fork			*right_fork;
 	int						right_free;
 	struct s_rules_philo	*rules;
 }t_philo;
 
+typedef struct s_rules_philo
+{
+	int				philo_nb;
+	long			time_die;
+	long			time_eat;
+	long			time_slp;
+	int				nb_must_eat;
+	long			start_time;
+	pthread_mutex_t	lock_rules;
+	struct s_philo	*philosophes;	
+}t_rules_philo;
 
 int		bool_empty_false_data(char *str);
 int		ft_strlen(char *str);
@@ -70,7 +71,7 @@ long	ft_atol(char *str);
 
 void	msg_error(char *str);
 
-void	ft_init_rules(t_rules_philo *rules, int argc, char **argv);
+void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char **argv);
 
 
 #endif
