@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/06 18:23:50 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:57:44 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,23 @@ void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char *
 	pthread_mutex_init(&(rules->lock_rules), NULL);
 }
 
-void	ft_init_philos_forks(int id, t_rules_philo *rules)
+void	ft_init_philos_forks(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *rules)
 {
-	rules->philosophes[id].philo_id = id;
-	rules->philosophes[id].nb_of_meal = 0;
-	rules->philosophes[id].is_dead = 0;
-	rules->philosophes[id].last_meal = 0;
-	rules->philosophes[id].rules = rules;
+	philosophe->philo_id = id;
+	philosophe->nb_of_meal = 0;
+	philosophe->is_dead = 0;
+	philosophe->last_meal = 0;
+	philosophe->rules = rules;
 	if (id == 0)
 	{
-		rules->philosophes[id].right_fork = rules->philosophes->
-	}	
-	
+		philosophe->left_fork = &(*forks)[0];
+		philosophe->right_fork = &(*forks)[rules->philo_nb - 1];
+	}
+	else
+	{
+		philosophe->left_fork = &(*forks)[id];
+		philosophe->right_fork = &(*forks)[id - 1];
+	}
 	
 }
 
@@ -63,7 +68,6 @@ void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, t_rules_phi
 {
 	int	id;
 	
-	pthread_mutex_lock(&(rules->lock_rules));
 	*philosophes = (t_philo *)malloc(sizeof(t_philo) * rules->philo_nb);
 	if (!(*philosophes))
 		msg_error(ERR_GEN_PHILO);
@@ -73,12 +77,10 @@ void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, t_rules_phi
 		free(*philosophes);
 		msg_error(ERR_GEN_FORK);
 	}
-	rules->philosophes = *philosophes;
 	id = 0;
 	while (id < rules->philo_nb)
 	{
-		ft_init_philos_forks(id, rules);
+		ft_init_philos_forks(&(*philosophes[id]), forks, id, rules);
 		id++;
 	}
-	pthread_mutex_unlock(&(rules->lock_rules));
 }
