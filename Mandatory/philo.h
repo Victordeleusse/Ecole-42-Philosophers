@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/07 13:32:33 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:51:26 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ typedef struct s_fork
 	pthread_mutex_t	lock_fork;
 }t_fork;
 
+struct s_philo;
+
 typedef struct s_rules_philo
 {
 	pthread_t		death_check;
@@ -45,6 +47,7 @@ typedef struct s_rules_philo
 	long			time_eat;
 	long			time_slp;
 	int				nb_must_eat;
+	struct s_philo	**philosophes;
 }t_rules_philo;
 
 typedef struct s_philo
@@ -55,6 +58,7 @@ typedef struct s_philo
 	int						nb_of_meal;
 	long					last_meal;
 	int						is_dead;
+	int						is_done;
 	struct s_fork			*left_fork;
 	int						left_free;
 	struct s_fork			*right_fork;
@@ -65,12 +69,21 @@ typedef struct s_philo
 int		bool_empty_false_data(char *str);
 int		ft_strlen(char *str);
 long	ft_atol(char *str);
+long	ft_get_timestamp(void);
 
 void	msg_error(char *str);
 
+int		ft_check_dead_or_done(t_philo *philo);
+
+void	*ft_death(void *data);
+void	*ft_life_philo(void *data);
+int		ft_start_threads(t_philo **philosophes, t_rules_philo *rules);
+
 void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char **argv);
-void	ft_init_philos(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *rules);
+void	ft_init_philo(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *rules);
 void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, t_rules_philo *rules);
+
+
 
 
 #endif
