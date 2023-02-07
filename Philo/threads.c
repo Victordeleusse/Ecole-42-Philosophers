@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 11:16:06 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/07 18:50:27 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/07 19:27:48 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	*ft_death(void *data)
 			if (philosophe[id].nb_of_meal >= philosophe->rules->nb_must_eat && philosophe->rules->nb_must_eat > 0)
 				philosophe[id].is_done = 1;
 			actual_time = ft_get_timestamp();
-			fprintf(stderr, "TIME : %ld\n", actual_time);
+			// fprintf(stderr, "TIME : %ld\n", actual_time);
 			if ((actual_time - philosophe[id].last_meal) > philosophe->rules->time_eat || (actual_time - philosophe[id].start_life) > philosophe->rules->time_die)
 			{	
 				philosophe[id].is_dead = 1;
@@ -53,8 +53,10 @@ void	*ft_life_philo(void *data)
 		if (philo->left_free == 0 && philo->right_free == 0)
 		{
 			pthread_mutex_lock(&philo->left_fork->lock_fork);
+			printf("Le philosophe num %d utilise la fourchette gauche num: %d ||", philo->philo_id, philo->left_fork->fork_id);
 			philo->left_free = 1;
 			pthread_mutex_lock(&philo->right_fork->lock_fork);
+			printf(" la fourchette droite num: %d\n", philo->right_fork->fork_id);
 			philo->right_free = 1;
 			printf("Le philosophe num %d est en train de manger\n", philo->philo_id);
 			usleep(philo->rules->time_eat);
@@ -89,6 +91,7 @@ int	ft_start_threads(t_philo **philosophes, t_rules_philo *rules)
 			return (1);
 		}
 		id++;
+		sleep(1);
 	}
 	if (pthread_create(&rules->death_check, NULL, &ft_death, philosophes))
 	{	
