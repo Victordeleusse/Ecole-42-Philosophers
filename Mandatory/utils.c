@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:31:08 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/06 11:16:02 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:49:30 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,12 @@ long	ft_atol(char *str)
 		i++;
 	}
 	return (resultat);
+}
+
+long	ft_get_timestamp(void)
+{
+	time_t seconds;
+     
+    time(&seconds);
+	return(seconds);
 }
