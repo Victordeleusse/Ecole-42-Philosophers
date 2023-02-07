@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/06 19:11:53 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:33:06 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char *
 			msg_error(WRONG_NB_MEALS);
 		rules->nb_must_eat = (int)ft_atol(argv[5]);
 	}
-	while (i < argc - 1)
+	while (i < 5)
 	{
 		if (bool_empty_false_data(argv[i])== 0 || ft_atol(argv[i]) == 0)
 			msg_error(WRONG_DURATION);
@@ -38,14 +38,13 @@ void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char *
 	rules->time_die = ft_atol(argv[2]);
 	rules->time_eat = ft_atol(argv[3]);
 	rules->time_slp = ft_atol(argv[4]);
-	(long)time(&rules->start_time);
-	rules->philosophes = *philosophes;
-	pthread_mutex_init(&(rules->lock_rules), NULL);
+	// pthread_mutex_init(&(rules->lock_rules), NULL);
 }
 
 void	ft_init_philos(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *rules)
 {
 	philosophe->philo_id = id;
+	philosophe->start_life = 0;
 	philosophe->nb_of_meal = 0;
 	philosophe->last_meal = 0;
 	philosophe->is_dead = 0;
@@ -59,8 +58,14 @@ void	ft_init_philos(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *
 	philosophe->rules = rules;
 }
 
+void	ft_init_forks(t_fork *fork, int id)
+{
+	fork->fork_id = id;
+	fork->is_used = 0;
+	pthread_mutex_init(&(fork->lock_fork), NULL);
+}
 
-void	ft_generate_philos(t_philo **philosophes, t_fork **forks, t_rules_philo *rules)
+void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, t_rules_philo *rules)
 {
 	int	id;
 	
@@ -76,7 +81,8 @@ void	ft_generate_philos(t_philo **philosophes, t_fork **forks, t_rules_philo *ru
 	id = 0;
 	while (id < rules->philo_nb)
 	{
-		ft_init_philos(&(*philosophes[id]), forks, id, rules);
+		ft_init_forks(&((*forks)[id]), id);
+		ft_init_philos(&((*philosophes)[id]), forks, id, rules);
 		id++;
 	}
 }
