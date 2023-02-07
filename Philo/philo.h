@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/07 16:51:26 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:48:55 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <time.h>
 # include <sys/time.h>
 # include <sys/wait.h>
+
+#define GREEN	"\e[32m"
+#define RED	"\e[31m"
 
 # define ERR_INPUT "Please, use it as : ./philo number_of_philosophers time_to_die \
 time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
@@ -74,6 +77,7 @@ long	ft_get_timestamp(void);
 void	msg_error(char *str);
 
 int		ft_check_dead_or_done(t_philo *philo);
+int		ft_check_global(t_philo **philosophes);
 
 void	*ft_death(void *data);
 void	*ft_life_philo(void *data);
