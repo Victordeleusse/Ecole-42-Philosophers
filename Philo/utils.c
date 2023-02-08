@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:31:08 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/07 14:49:30 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:53:08 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ long	ft_atol(char *str)
 	return (resultat);
 }
 
-long	ft_get_timestamp(void)
+long	ft_get_timestamp(long start_time)
 {
-	time_t seconds;
+	struct timeval time;
      
-    time(&seconds);
-	return(seconds);
+    gettimeofday(&time, NULL);
+	return((time.tv_sec * 1000 + time.tv_usec / 1000) - start_time);
 }

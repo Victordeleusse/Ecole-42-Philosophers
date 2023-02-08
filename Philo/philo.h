@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/07 17:48:55 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:53:43 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ struct s_philo;
 typedef struct s_rules_philo
 {
 	pthread_t		death_check;
+	long			start_time;
 	int				philo_nb;
 	long			time_die;
 	long			time_eat;
@@ -56,7 +57,6 @@ typedef struct s_rules_philo
 typedef struct s_philo
 {
 	pthread_t				thread_id;
-	long					start_life;
 	int						philo_id;
 	int						nb_of_meal;
 	long					last_meal;
@@ -72,7 +72,7 @@ typedef struct s_philo
 int		bool_empty_false_data(char *str);
 int		ft_strlen(char *str);
 long	ft_atol(char *str);
-long	ft_get_timestamp(void);
+long	ft_get_timestamp(long start_time);
 
 void	msg_error(char *str);
 

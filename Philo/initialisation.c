@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/07 16:51:05 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:53:52 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char *
 	rules->time_eat = ft_atol(argv[3]);
 	rules->time_slp = ft_atol(argv[4]);
 	rules->philosophes = philosophes;
+	rules->start_time = 0;
 }
 
 void	ft_init_philo(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *rules)
 {
-	philosophe->philo_id = id;
-	philosophe->start_life = 0;
+	philosophe->philo_id = id + 1;
 	philosophe->nb_of_meal = 0;
 	philosophe->last_meal = 0;
 	philosophe->is_dead = 0;
@@ -61,7 +61,7 @@ void	ft_init_philo(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *r
 
 void	ft_init_forks(t_fork *fork, int id)
 {
-	fork->fork_id = id;
+	fork->fork_id = id + 1;
 	fork->is_used = 0;
 	pthread_mutex_init(&(fork->lock_fork), NULL);
 }

@@ -1,7 +1,7 @@
 NAME = philo
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -pthread
 
 SRCS =	main.c threads.c utils.c initialisation.c error.c check.c
 
