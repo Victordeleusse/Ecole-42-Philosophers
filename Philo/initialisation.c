@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/10 13:13:36 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/13 20:08:27 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	ft_init_philo(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *r
 	else
 		philosophe->right_fork = &(*forks)[id - 1];
 	philosophe->rules = rules;
+	philosophe->right_free = 0;
+	philosophe->left_free = 0;
 }
 
 void	ft_init_forks(t_fork *fork, int id)

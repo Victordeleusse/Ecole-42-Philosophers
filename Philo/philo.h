@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/10 13:13:44 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/13 20:09:06 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ typedef struct s_philo
 	int						is_dead;
 	int						is_done;
 	struct s_fork			*left_fork;
+	int						left_free;
 	struct s_fork			*right_fork;
+	int						right_free;
 	struct s_rules_philo	*rules;
 }t_philo;
 

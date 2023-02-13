@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 11:16:06 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/09 11:13:14 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/13 20:36:09 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	*ft_life_philo(void *data)
 	long	start_time;
 
 	philo = (t_philo *)data;
-	philo->last_meal = ft_get_timestamp(philo->rules->start_time);
 	if (philo->philo_id % 2)
 		usleep(philo->rules->time_eat);
 	while (!philo->is_done && !philo->is_dead && !philo->rules->one_dead)
