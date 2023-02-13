@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 11:16:06 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/08 18:55:52 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/09 11:13:14 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,16 @@ void	*ft_life_philo(void *data)
 	philo->last_meal = ft_get_timestamp(philo->rules->start_time);
 	if (philo->philo_id % 2)
 		usleep(philo->rules->time_eat);
-	
+	while (!philo->is_done && !philo->is_dead && !philo->rules->one_dead)
+	{
+		ft_get_right_fork
+		ft_get_left_fork
+		eat;
+		ft_release_right_fork
+		ft_release_left_fork
+		sleep;
+		think;
+	}
 		
 }
 
@@ -42,12 +51,12 @@ int	ft_generate_threads(t_philo **philosophes, t_rules_philo *rules)
 			return (1);
 		id++;
 	}
-	if (pthread_create(&((*rules).death_check), NULL, &ft_death_sentence, NULL) == 0)
+	if (pthread_create(&((*rules).death_check), NULL, &ft_death_sentence, rules) == 0)
 			return (1);
 	return (0);
 }
 
-void	ft_wait_threads(t_philo **philosophes, t_rules_philo *rules)
+void	ft_join_threads(t_philo **philosophes, t_rules_philo *rules)
 {
 	int	id;
 

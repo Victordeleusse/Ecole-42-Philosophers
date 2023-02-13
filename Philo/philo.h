@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/08 18:53:43 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/10 13:13:44 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@ typedef struct s_rules_philo
 	pthread_t		death_check;
 	long			start_time;
 	int				philo_nb;
+	int				one_dead;
 	long			time_die;
 	long			time_eat;
 	long			time_slp;
+	long			time_thk;
 	int				nb_must_eat;
 	struct s_philo	**philosophes;
 }t_rules_philo;
@@ -63,9 +65,7 @@ typedef struct s_philo
 	int						is_dead;
 	int						is_done;
 	struct s_fork			*left_fork;
-	int						left_free;
 	struct s_fork			*right_fork;
-	int						right_free;
 	struct s_rules_philo	*rules;
 }t_philo;
 
