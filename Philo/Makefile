@@ -3,7 +3,7 @@ NAME = philo
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -pthread
 
-SRCS =	main.c threads.c utils.c initialisation.c error.c check.c
+SRCS =	main.c threads.c utils.c initialisation.c handle_life.c handle_death.c eating_process.c
 
 OBJS = ${SRCS:.c=.o}
 DEPS = ${SRCS:.c=.d}

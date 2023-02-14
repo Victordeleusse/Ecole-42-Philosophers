@@ -6,37 +6,11 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 11:16:06 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/13 20:36:09 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:04:29 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	*ft_life_philo(void *data)
-{
-	t_philo	*philo;
-	long	start_time;
-
-	philo = (t_philo *)data;
-	if (philo->philo_id % 2)
-		usleep(philo->rules->time_eat);
-	while (!philo->is_done && !philo->is_dead && !philo->rules->one_dead)
-	{
-		ft_get_right_fork
-		ft_get_left_fork
-		eat;
-		ft_release_right_fork
-		ft_release_left_fork
-		sleep;
-		think;
-	}
-		
-}
-
-void	*ft_death_sentence(void *data)
-{
-	
-}
 
 int	ft_generate_threads(t_philo **philosophes, t_rules_philo *rules)
 {
@@ -50,7 +24,7 @@ int	ft_generate_threads(t_philo **philosophes, t_rules_philo *rules)
 			return (1);
 		id++;
 	}
-	if (pthread_create(&((*rules).death_check), NULL, &ft_death_sentence, rules) == 0)
+	if (pthread_create(&((*rules).death_check), NULL, &ft_check_death_of_all_philos, philosophes) == 0)
 			return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/13 20:08:27 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:16:38 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char *
 	rules->time_die = ft_atol(argv[2]);
 	rules->time_eat = ft_atol(argv[3]);
 	rules->time_slp = ft_atol(argv[4]);
+	pthread_mutex_init(&(rules->lock_death), NULL);
 	rules->time_thk = rules->time_die - rules->time_eat - rules->time_slp;
 	rules->philosophes = philosophes;
 	rules->start_time = 0;
@@ -48,8 +49,11 @@ void	ft_init_philo(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *r
 {
 	philosophe->philo_id = id + 1;
 	philosophe->nb_of_meal = 0;
+	pthread_mutex_init(&(philosophe->lock_nb_of_meal), NULL);
 	philosophe->last_meal = 0;
+	pthread_mutex_init(&(philosophe->lock_last_meal), NULL);
 	philosophe->is_dead = 0;
+	pthread_mutex_init(&(philosophe->lock_is_dead), NULL);
 	philosophe->is_done = 0;
 	philosophe->left_fork = &(*forks)[id];
 	if (id == 0)

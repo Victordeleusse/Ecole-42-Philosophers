@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/13 20:09:06 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:26:54 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_rules_philo
 	long			time_thk;
 	int				nb_must_eat;
 	struct s_philo	**philosophes;
+	pthread_mutex_t	lock_death;
 }t_rules_philo;
 
 typedef struct s_philo
@@ -61,8 +62,11 @@ typedef struct s_philo
 	pthread_t				thread_id;
 	int						philo_id;
 	int						nb_of_meal;
+	pthread_mutex_t			lock_nb_of_meal;
 	long					last_meal;
+	pthread_mutex_t			lock_last_meal;
 	int						is_dead;
+	pthread_mutex_t			lock_is_dead;
 	int						is_done;
 	struct s_fork			*left_fork;
 	int						left_free;
@@ -75,18 +79,22 @@ int		bool_empty_false_data(char *str);
 int		ft_strlen(char *str);
 long	ft_atol(char *str);
 long	ft_get_timestamp(long start_time);
-
 void	msg_error(char *str);
 
-int		ft_check_dead_or_done(t_philo *philo);
-int		ft_check_global(t_philo **philosophes);
+void	ft_check_done_philo(t_philo *philo);
+void	ft_get_right_fork(t_philo *philo);
+void	ft_get_left_fork(t_philo *philo);
+void	ft_lets_eat(t_philo *philo);
 
-void	*ft_death(void *data);
+int		ft_check_death_of_a_philo(t_philo *philo);
+void	*ft_check_death_of_all_philos(void *data);
+
 void	*ft_life_philo(void *data);
 int		ft_start_threads(t_philo **philosophes, t_rules_philo *rules);
 
 void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char **argv);
 void	ft_init_philo(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *rules);
+void	ft_init_forks(t_fork *fork, int id);
 void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, t_rules_philo *rules);
 
 
