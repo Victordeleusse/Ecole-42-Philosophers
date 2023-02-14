@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 11:17:31 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/14 20:30:31 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/14 20:42:47 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,18 @@ void	ft_check_done_philo(t_philo *philo)
 		printf("Le philosophe %d a fini de manger\n", philo->philo_id);
 	}
 	pthread_mutex_unlock(&(philo->lock_nb_of_meal));
+}
+
+void	ft_lets_sleep_and_think(t_philo *philo)
+{	
+	ft_check_done_philo(philo);
+	if (philo->is_done)
+		return ;
+	usleep(philo->rules->time_slp);
+	printf("Le philosophe %d dort\n", philo->philo_id);
+	usleep(philo->rules->time_thk);
+	printf("Le philosophe %d pense\n", philo->philo_id);
+
 }
 
 void	ft_get_right_fork(t_philo *philo)
@@ -68,5 +80,5 @@ void	ft_lets_eat(t_philo *philo)
 	pthread_mutex_unlock(&(philo->right_fork->lock_fork));
 	printf("Le philosophe %d relache sa fourchette de droite\n", philo->philo_id);
 	printf("Le philosophe %d relache sa fourchette de gauche\n", philo->philo_id);
-	ft_check_done_philo(philo);
+	ft_lets_sleep_and_think(philo);
 }
