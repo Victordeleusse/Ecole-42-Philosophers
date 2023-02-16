@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/16 15:51:55 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:47:13 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
 # define WRONG_PHILO "Wrong entry parameter : please enter a valid number of philosophers\n"
 # define WRONG_NB_MEALS "Wrong entry parameter : please enter a valid number of meals\n"
 # define DONE_NB_MEALS "The philosopher ate all his meals\n"
+
+# define FORK "has taken a fork"
+# define EAT "is eating"
+# define SLEEP "is sleeping"
+# define THINK "is thinking"
+# define DEATH "died"
 
 typedef struct s_fork
 {
@@ -82,6 +88,7 @@ int		ft_strlen(char *str);
 long	ft_atol(char *str);
 long	ft_get_timestamp(long start_time);
 void	msg_error(char *str);
+void	ft_state_msg(char *str, t_philo *philo);
 
 void	ft_check_done_philo(t_philo *philo);
 void	ft_lets_sleep_and_think(t_philo *philo);
@@ -101,8 +108,5 @@ void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char *
 void	ft_init_philo(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *rules);
 void	ft_init_forks(t_fork *fork, int id);
 void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, t_rules_philo *rules);
-
-
-
 
 #endif

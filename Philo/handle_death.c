@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 12:21:54 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/16 16:06:43 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:46:05 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ int	ft_check_death_of_a_philo(t_philo *philo)
 	pthread_mutex_unlock(&(philo->lock_last_meal));
 	if (last_meal >= time_limit)
 	{
-		pthread_mutex_lock(&(philo->lock_is_dead));
 		philo->is_dead = 1;
-		printf("Le philosophe %d est mort\n", philo->philo_id);
-		pthread_mutex_unlock(&(philo->lock_is_dead));
+		ft_state_msg(DEATH, philo);
 		return (1);
 	}
 	return (0);
