@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/14 20:16:38 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/16 15:52:18 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char *
 	rules->philosophes = philosophes;
 	rules->start_time = 0;
 	rules->one_dead = 0;
+	pthread_mutex_init(&(rules->lock_writing), NULL);
 }
 
 void	ft_init_philo(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *rules)

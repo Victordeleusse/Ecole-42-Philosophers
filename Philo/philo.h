@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/14 20:26:54 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/16 15:51:55 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
 # define WRONG_DURATION "Wrong entry parameter : please enter a valid duration\n"
 # define WRONG_PHILO "Wrong entry parameter : please enter a valid number of philosophers\n"
 # define WRONG_NB_MEALS "Wrong entry parameter : please enter a valid number of meals\n"
+# define DONE_NB_MEALS "The philosopher ate all his meals\n"
 
 typedef struct s_fork
 {
@@ -55,6 +56,7 @@ typedef struct s_rules_philo
 	int				nb_must_eat;
 	struct s_philo	**philosophes;
 	pthread_mutex_t	lock_death;
+	pthread_mutex_t	lock_writing;
 }t_rules_philo;
 
 typedef struct s_philo
@@ -82,6 +84,7 @@ long	ft_get_timestamp(long start_time);
 void	msg_error(char *str);
 
 void	ft_check_done_philo(t_philo *philo);
+void	ft_lets_sleep_and_think(t_philo *philo);
 void	ft_get_right_fork(t_philo *philo);
 void	ft_get_left_fork(t_philo *philo);
 void	ft_lets_eat(t_philo *philo);
@@ -90,7 +93,9 @@ int		ft_check_death_of_a_philo(t_philo *philo);
 void	*ft_check_death_of_all_philos(void *data);
 
 void	*ft_life_philo(void *data);
-int		ft_start_threads(t_philo **philosophes, t_rules_philo *rules);
+
+int		ft_generate_threads(t_philo **philosophes, t_rules_philo *rules);
+int		ft_join_threads(t_philo **philosophes, t_rules_philo *rules);
 
 void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char **argv);
 void	ft_init_philo(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *rules);

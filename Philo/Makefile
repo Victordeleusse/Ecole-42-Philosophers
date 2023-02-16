@@ -13,10 +13,10 @@ DEPS = ${SRCS:.c=.d}
 # CFLAGS += -g 
 
 all: ${NAME}
-	clear
+#	clear
 
 ${NAME}: ${OBJS}
-		@ $(CC) -o ${NAME} $(CFLAGS) ${OBJS}
+		$(CC) -o ${NAME} $(CFLAGS) ${OBJS}
 
 %.o: %.c 
 			${CC} -MMD -o $@ -c $<
@@ -33,4 +33,4 @@ fclean:	clean
 
 re:	fclean all
 
-.PHONY: clean fclean re bonus
+.PHONY: clean fclean re 

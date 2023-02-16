@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 11:17:31 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/14 20:42:47 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:21:32 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,31 @@
 
 void	ft_check_done_philo(t_philo *philo)
 {
+	int	nb_mandatory_meal;
+
 	pthread_mutex_lock(&(philo->lock_nb_of_meal));
-	if (philo->nb_of_meal >= philo->rules->nb_must_eat)
+	nb_mandatory_meal = philo->rules->nb_must_eat;
+	pthread_mutex_unlock(&(philo->lock_nb_of_meal));
+	if (philo->nb_of_meal >= nb_mandatory_meal)
 	{
 		philo->is_done = 1;
+		pthread_mutex_lock(&(philo->rules->lock_writing));
 		printf("Le philosophe %d a fini de manger\n", philo->philo_id);
+		pthread_mutex_unlock(&(philo->rules->lock_writing));
 	}
-	pthread_mutex_unlock(&(philo->lock_nb_of_meal));
 }
 
 void	ft_lets_sleep_and_think(t_philo *philo)
 {	
 	ft_check_done_philo(philo);
 	if (philo->is_done)
-		return ;
-	usleep(philo->rules->time_slp);
+		exit(1) ;
+	pthread_mutex_lock(&(philo->rules->lock_writing));
 	printf("Le philosophe %d dort\n", philo->philo_id);
-	usleep(philo->rules->time_thk);
 	printf("Le philosophe %d pense\n", philo->philo_id);
-
+	pthread_mutex_unlock(&(philo->rules->lock_writing));
+	usleep(philo->rules->time_slp);
+	usleep(philo->rules->time_thk);
 }
 
 void	ft_get_right_fork(t_philo *philo)
@@ -65,7 +71,9 @@ void	ft_lets_eat(t_philo *philo)
 {
 	if (philo->right_free && philo->left_free)
 	{
+		pthread_mutex_lock(&(philo->rules->lock_writing));
 		printf("Le philosophe %d est en train de manger\n", philo->philo_id);
+		pthread_mutex_unlock(&(philo->rules->lock_writing));
 		usleep(philo->rules->time_eat);
 		pthread_mutex_lock(&(philo->lock_last_meal));
 		philo->nb_of_meal++;
@@ -78,7 +86,9 @@ void	ft_lets_eat(t_philo *philo)
 	philo->left_free = 0;
 	pthread_mutex_unlock(&(philo->left_fork->lock_fork));
 	pthread_mutex_unlock(&(philo->right_fork->lock_fork));
+	pthread_mutex_lock(&(philo->rules->lock_writing));
 	printf("Le philosophe %d relache sa fourchette de droite\n", philo->philo_id);
 	printf("Le philosophe %d relache sa fourchette de gauche\n", philo->philo_id);
+	pthread_mutex_unlock(&(philo->rules->lock_writing));
 	ft_lets_sleep_and_think(philo);
 }
