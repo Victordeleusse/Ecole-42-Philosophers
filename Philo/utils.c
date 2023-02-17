@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:31:08 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/16 18:48:02 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/17 10:29:56 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,15 @@ long	ft_get_timestamp(long start_time)
 	return(time.tv_sec * 1000 + time.tv_usec / 1000) - start_time;
 }
 
+void	ft_usleep(long time)
+{
+	long	chrono;
+	
+	chrono = ft_get_timestamp(0);
+	while (ft_get_timestamp(0) - chrono < time)
+		usleep(100);
+}
+
 void	msg_error(char *str)
 {
 	write(1, str, ft_strlen(str));
@@ -83,7 +92,6 @@ void	ft_state_msg(char *str, t_philo *philo)
 	pthread_mutex_lock(&(philo->rules->lock_writing));
 	start_time = philo->rules->start_time;
 	curr_time = ft_get_timestamp(start_time);
-	// if (!ft_check_death_of_a_philo(philo))
 	printf("%ld %d %s\n",curr_time, philo->philo_id, str);
 	pthread_mutex_unlock(&(philo->rules->lock_writing));
 }

@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/16 18:47:13 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/17 10:31:54 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
 # define SLEEP "is sleeping"
 # define THINK "is thinking"
 # define DEATH "died"
+# define END "a fini de manger"
+
 
 typedef struct s_fork
 {
@@ -87,6 +89,7 @@ int		bool_empty_false_data(char *str);
 int		ft_strlen(char *str);
 long	ft_atol(char *str);
 long	ft_get_timestamp(long start_time);
+void	ft_usleep(long time);
 void	msg_error(char *str);
 void	ft_state_msg(char *str, t_philo *philo);
 

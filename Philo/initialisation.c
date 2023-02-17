@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/16 18:46:26 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/17 13:27:23 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char *
 		msg_error(ERR_INPUT);
 	if (bool_empty_false_data(argv[1]) == 0 || ft_atol(argv[1]) == 0)
 		msg_error(WRONG_PHILO);
-	rules->nb_must_eat = -1;
+	rules->nb_must_eat = 9999999999;
 	if (argc == 6)	
 	{
 		if (bool_empty_false_data(argv[5]) == 0 || ft_atol(argv[5]) == 0)

@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 12:21:54 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/16 18:46:05 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/17 13:41:57 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,23 @@ int	ft_check_death_of_a_philo(t_philo *philo)
 	return (0);
 }
 
+int	ft_check_all_philos_are_done(t_philo **philo)
+{
+	int				id;
+	t_rules_philo	*rules;
+	
+	id = 0;
+	rules = (*philo)->rules;
+	while (id < rules->philo_nb)
+	{
+		if ((*philo)[id].is_done == 1)
+			id++;
+		else
+			return (0);
+	}
+	return (1);
+}
+
 void	*ft_check_death_of_all_philos(void *data)
 {
 	t_philo			**philosophes;
@@ -42,17 +59,20 @@ void	*ft_check_death_of_all_philos(void *data)
 	while (1)
 	{
 		id = 0;
+		if (ft_check_all_philos_are_done(philosophes))
+			exit(EXIT_SUCCESS);
 		while (id < rules->philo_nb)
 		{
 			if (ft_check_death_of_a_philo(&((*philosophes)[id])))
 			{
 				pthread_mutex_lock(&(rules->lock_death));
 				rules->one_dead = 1;
+				exit(EXIT_FAILURE);
 				pthread_mutex_unlock(&(rules->lock_death));
 				return (NULL);
 			}
 			id++;
 		}
-		usleep(100);
+		ft_usleep(10);
 	}
 }
