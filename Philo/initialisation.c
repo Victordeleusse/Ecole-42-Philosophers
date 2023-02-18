@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/17 13:27:23 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/18 11:18:10 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char *
 		msg_error(ERR_INPUT);
 	if (bool_empty_false_data(argv[1]) == 0 || ft_atol(argv[1]) == 0)
 		msg_error(WRONG_PHILO);
-	rules->nb_must_eat = 9999999999;
+	rules->nb_must_eat = 9999999;
 	if (argc == 6)	
 	{
 		if (bool_empty_false_data(argv[5]) == 0 || ft_atol(argv[5]) == 0)
@@ -40,6 +40,8 @@ void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char *
 	rules->time_slp = ft_atol(argv[4]);
 	pthread_mutex_init(&(rules->lock_death), NULL);
 	rules->time_thk = rules->time_die - rules->time_eat - rules->time_slp;
+	if (rules->time_thk < 0)
+		rules->time_thk = 0;
 	rules->philosophes = philosophes;
 	rules->start_time = 0;
 	rules->one_dead = 0;
@@ -79,12 +81,12 @@ void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, t_rules_phi
 	
 	*philosophes = (t_philo *)malloc(sizeof(t_philo) * rules->philo_nb);
 	if (!(*philosophes))
-		msg_error(ERR_GEN_PHILO);
+		perror(ERR_GEN_PHILO);
 	*forks = (t_fork *)malloc(sizeof(t_fork) * rules->philo_nb);
 	if (!(*forks))
 	{
 		free(*philosophes);
-		msg_error(ERR_GEN_FORK);
+		perror(ERR_GEN_FORK);
 	}
 	id = 0;
 	while (id < rules->philo_nb)

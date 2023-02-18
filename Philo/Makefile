@@ -13,7 +13,7 @@ DEPS = ${SRCS:.c=.d}
 # CFLAGS += -g 
 
 all: ${NAME}
-	clear
+#	clear
 
 ${NAME}: ${OBJS}
 		@ $(CC) -o ${NAME} $(CFLAGS) ${OBJS}

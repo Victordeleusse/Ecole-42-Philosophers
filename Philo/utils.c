@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:31:08 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/17 10:29:56 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/18 11:15:44 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_usleep(long time)
 	
 	chrono = ft_get_timestamp(0);
 	while (ft_get_timestamp(0) - chrono < time)
-		usleep(100);
+		usleep(1);
 }
 
 void	msg_error(char *str)
