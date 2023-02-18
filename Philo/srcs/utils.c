@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:31:08 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/18 14:44:29 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/18 15:52:22 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ long	ft_atol(char *str)
 	
 	i = 0;
 	resultat = 0;
-	while (str[i] && str[i] == ' ' || str[i] == '\t')
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 		i++;
 	if (str[i] && str[i] == '+')
 		i++;

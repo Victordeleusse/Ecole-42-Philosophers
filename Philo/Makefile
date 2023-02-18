@@ -1,35 +1,38 @@
 NAME = philo
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -pthread
+CFLAGS = -Wall -Werror -Wextra
 
-SRCS =	main.c threads.c utils.c initialisation.c handle_life.c handle_death.c eating_process.c
+SRCS =	eating_process.c handle_death.c handle_life.c initialisation.c main.c threads.c utils.c 
+		
+SRCS_PATH = srcs/
+OBJS_PATH = objs
 
-OBJS = ${SRCS:.c=.o}
-DEPS = ${SRCS:.c=.d}
+HEADER_PATH += ${SRCS_PATH}includes/
+HEADER = philo.h
 
-# CFLAGS += -fsanitize=address,undefined -g2
-# CFLAGS += -valgrind
-# CFLAGS += -g 
+vpath %.c ${SRCS_PATH}
+vpath %.h ${HEADER_PATH} 
+# *.h -> ./srcs/includes/philo.h
 
 all: ${NAME}
-#	clear
 
-${NAME}: ${OBJS}
-		@ $(CC) -o -g ${NAME} $(CFLAGS) ${OBJS}
+OBJS = ${patsubst %.c, ${OBJS_PATH}/%.o, ${SRCS}}
 
-%.o: %.c 
-			${CC} -MMD -o $@ -c -g $<
+${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile ${HEADER}
+		mkdir -p ${OBJS_PATH}
+		${CC} ${CFLAGS} -g -c $< -o $@ -I ${HEADER_PATH}
+
+${NAME}: ${OBJS} 
+		$(CC) -o ${NAME} $(CFLAGS) ${OBJS}  
 
 clean:	
-		rm -f ${OBJS} ${DEPS}
+		rm -rf $(OBJS_PATH)
 		clear
 
 fclean:	clean
 		rm -f ${NAME}
 		clear
-
--include $(DEPS) $(DEPS_BONUS) 
 
 re:	fclean all
 
