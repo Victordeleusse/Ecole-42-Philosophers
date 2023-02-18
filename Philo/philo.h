@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/17 10:31:54 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/18 14:45:04 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ typedef struct s_rules_philo
 	pthread_t		death_check;
 	long			start_time;
 	int				philo_nb;
-	int				one_dead;
 	long			time_die;
 	long			time_eat;
 	long			time_slp;
@@ -83,6 +82,7 @@ typedef struct s_philo
 	struct s_fork			*right_fork;
 	int						right_free;
 	struct s_rules_philo	*rules;
+	struct s_fork			**forks;
 }t_philo;
 
 int		bool_empty_false_data(char *str);
@@ -92,6 +92,7 @@ long	ft_get_timestamp(long start_time);
 void	ft_usleep(long time);
 void	msg_error(char *str);
 void	ft_state_msg(char *str, t_philo *philo);
+void	ft_free_philos_forks(t_philo **philosophes, t_fork **forks);
 
 void	ft_check_done_philo(t_philo *philo);
 void	ft_lets_sleep_and_think(t_philo *philo);

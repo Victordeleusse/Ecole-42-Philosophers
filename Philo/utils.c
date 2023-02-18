@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:31:08 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/18 11:51:04 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/18 14:44:29 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,10 @@ void	ft_state_msg(char *str, t_philo *philo)
 	curr_time = ft_get_timestamp(start_time);
 	printf("%ld %d %s\n",curr_time, philo->philo_id, str);
 	pthread_mutex_unlock(&(philo->rules->lock_writing));
+}
+
+void	ft_free_philos_forks(t_philo **philosophes, t_fork **forks)
+{
+	free(*philosophes);
+	free(*forks);
 }

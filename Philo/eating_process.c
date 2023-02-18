@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 11:17:31 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/18 11:50:38 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/18 15:02:52 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,11 @@ void	ft_lets_eat(t_philo *philo)
 	if (philo->right_free && philo->left_free)
 	{
 		ft_state_msg(EAT, philo);	
-		ft_usleep(philo->rules->time_eat);
 		pthread_mutex_lock(&(philo->lock_last_meal));
 		philo->nb_of_meal++;
-		printf("Number of meals already eaten : %d\n", philo->nb_of_meal);
 		philo->last_meal = ft_get_timestamp(philo->rules->start_time);
 		pthread_mutex_unlock(&(philo->lock_last_meal));
+		ft_usleep(philo->rules->time_eat);
 	}
 	philo->right_fork->is_used = 0;
 	philo->right_free = 0;

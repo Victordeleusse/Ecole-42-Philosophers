@@ -16,10 +16,10 @@ all: ${NAME}
 #	clear
 
 ${NAME}: ${OBJS}
-		@ $(CC) -o ${NAME} $(CFLAGS) ${OBJS}
+		@ $(CC) -o -g ${NAME} $(CFLAGS) ${OBJS}
 
 %.o: %.c 
-			${CC} -MMD -o $@ -c $<
+			${CC} -MMD -o $@ -c -g $<
 
 clean:	
 		rm -f ${OBJS} ${DEPS}

@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/18 11:50:54 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/18 14:39:36 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char *
 		rules->time_thk = 0;
 	rules->philosophes = philosophes;
 	rules->start_time = 0;
-	rules->one_dead = 0;
 	pthread_mutex_init(&(rules->lock_writing), NULL);
 }
 
@@ -63,6 +62,7 @@ void	ft_init_philo(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *r
 		philosophe->right_fork = &(*forks)[rules->philo_nb - 1];
 	else
 		philosophe->right_fork = &(*forks)[id - 1];
+	philosophe->forks = forks;
 	philosophe->rules = rules;
 	philosophe->right_free = 0;
 	philosophe->left_free = 0;
@@ -81,12 +81,16 @@ void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, t_rules_phi
 	
 	*philosophes = (t_philo *)malloc(sizeof(t_philo) * rules->philo_nb);
 	if (!(*philosophes))
+	{	
 		perror(ERR_GEN_PHILO);
+		exit(1);
+	}	
 	*forks = (t_fork *)malloc(sizeof(t_fork) * rules->philo_nb);
 	if (!(*forks))
 	{
 		free(*philosophes);
 		perror(ERR_GEN_FORK);
+		exit(1);
 	}
 	id = 0;
 	while (id < rules->philo_nb)
