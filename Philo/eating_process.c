@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 11:17:31 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/18 11:10:55 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/18 11:50:38 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	ft_lets_sleep_and_think(t_philo *philo)
 {	
 	ft_check_done_philo(philo);
 	if (philo->is_done)
-		//exit(EXIT_SUCCESS);
 		return ;
 	ft_state_msg(SLEEP, philo);
 	ft_usleep(philo->rules->time_slp);

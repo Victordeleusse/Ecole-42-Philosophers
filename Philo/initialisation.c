@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/18 11:18:10 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/18 11:50:54 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char *
 	rules->time_eat = ft_atol(argv[3]);
 	rules->time_slp = ft_atol(argv[4]);
 	pthread_mutex_init(&(rules->lock_death), NULL);
-	rules->time_thk = rules->time_die - rules->time_eat - rules->time_slp;
+	rules->time_thk = (rules->time_die - rules->time_eat - rules->time_slp) / 2;
 	if (rules->time_thk < 0)
 		rules->time_thk = 0;
 	rules->philosophes = philosophes;
