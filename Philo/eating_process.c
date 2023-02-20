@@ -6,13 +6,13 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 11:17:31 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/18 15:02:52 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/20 12:02:09 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_check_done_philo(t_philo *philo)
+int	ft_check_done_philo(t_philo *philo)
 {
 	int		nb_mandatory_meal;
 
@@ -20,7 +20,11 @@ void	ft_check_done_philo(t_philo *philo)
 	nb_mandatory_meal = philo->rules->nb_must_eat;
 	pthread_mutex_unlock(&(philo->lock_nb_of_meal));
 	if (philo->nb_of_meal >= nb_mandatory_meal)
+	{	
 		philo->is_done = 1;
+		return (1);
+	}
+	return (0);
 }
 
 void	ft_lets_sleep_and_think(t_philo *philo)
@@ -36,19 +40,24 @@ void	ft_lets_sleep_and_think(t_philo *philo)
 
 void	ft_get_right_fork(t_philo *philo)
 {
-	pthread_mutex_lock(&(philo->right_fork->lock_fork));
-	philo->right_fork->is_used = 1;
-	philo->right_free = 1;
-	ft_state_msg(FORK, philo);
+	if (!philo->is_done && !philo->is_dead)
+	{
+		pthread_mutex_lock(&(philo->right_fork->lock_fork));
+		philo->right_fork->is_used = 1;
+		philo->right_free = 1;
+		ft_state_msg(FORK, philo);
+	}
 }
 
 void	ft_get_left_fork(t_philo *philo)
 {
-	pthread_mutex_lock(&(philo->left_fork->lock_fork));
-	philo->left_fork->is_used = 1;
-	philo->left_free = 1;
-	ft_state_msg(FORK, philo);
-
+	if (!philo->is_done && !philo->is_dead)
+	{
+		pthread_mutex_lock(&(philo->left_fork->lock_fork));
+		philo->left_fork->is_used = 1;
+		philo->left_free = 1;
+		ft_state_msg(FORK, philo);
+	}
 }
 
 void	ft_lets_eat(t_philo *philo)

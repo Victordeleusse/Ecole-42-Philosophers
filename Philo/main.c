@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:10 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/18 15:52:00 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/20 11:15:15 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ int	main(int argc, char **argv)
 	ft_generate_philos_forks(&philosophes, &forks, &rules);
 	ft_generate_threads(&philosophes, &rules);
 	ft_join_threads(&philosophes, &rules);
+	ft_free_philos_forks(&philosophes, &forks);
 	return (0);
 }

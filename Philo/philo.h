@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/18 17:21:17 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/20 13:38:35 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,10 @@ long	ft_get_timestamp(long start_time);
 void	ft_usleep(long time);
 void	msg_error(char *str);
 void	ft_state_msg(char *str, t_philo *philo);
+void	ft_state_msg_death(char *str, t_philo *philo);
 void	ft_free_philos_forks(t_philo **philosophes, t_fork **forks);
 
-void	ft_check_done_philo(t_philo *philo);
+int		ft_check_done_philo(t_philo *philo);
 void	ft_lets_sleep_and_think(t_philo *philo);
 void	ft_get_right_fork(t_philo *philo);
 void	ft_get_left_fork(t_philo *philo);
