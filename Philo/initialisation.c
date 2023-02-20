@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/18 14:39:36 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:28:39 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char *
 		rules->time_thk = 0;
 	rules->philosophes = philosophes;
 	rules->start_time = 0;
+	rules->is_a_dead = 0;
 	pthread_mutex_init(&(rules->lock_writing), NULL);
 }
 
@@ -53,7 +54,6 @@ void	ft_init_philo(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *r
 	philosophe->nb_of_meal = 0;
 	pthread_mutex_init(&(philosophe->lock_nb_of_meal), NULL);
 	philosophe->last_meal = 0;
-	pthread_mutex_init(&(philosophe->lock_last_meal), NULL);
 	philosophe->is_dead = 0;
 	pthread_mutex_init(&(philosophe->lock_is_dead), NULL);
 	philosophe->is_done = 0;

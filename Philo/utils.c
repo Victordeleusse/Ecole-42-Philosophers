@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:31:08 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/20 13:55:41 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:37:18 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ void	ft_state_msg(char *str, t_philo *philo)
 	pthread_mutex_lock(&(philo->rules->lock_writing));
 	start_time = philo->rules->start_time;
 	curr_time = ft_get_timestamp(start_time);
-	printf("%ld %d %s\n",curr_time, philo->philo_id, str);
+	if (!philo->rules->is_a_dead)
+		printf("%ld %d %s\n",curr_time, philo->philo_id, str);
 	pthread_mutex_unlock(&(philo->rules->lock_writing));
 }
 
@@ -105,13 +106,12 @@ void	ft_state_msg_death(char *str, t_philo *philo)
 	start_time = philo->rules->start_time;
 	curr_time = ft_get_timestamp(start_time);
 	printf("%ld %d %s\n",curr_time, philo->philo_id, str);
-	return ;
+	pthread_mutex_unlock(&(philo->rules->lock_writing));
 }
 
 void	ft_free_philos_forks(t_philo **philosophes, t_fork **forks)
 {
 	pthread_mutex_destroy(&(*philosophes)->lock_is_dead);
-	pthread_mutex_destroy(&(*philosophes)->lock_last_meal);
 	pthread_mutex_destroy(&(*philosophes)->lock_nb_of_meal);
 	pthread_mutex_destroy(&(*philosophes)->rules->lock_death);
 	pthread_mutex_destroy(&(*philosophes)->rules->lock_writing);

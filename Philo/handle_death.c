@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 12:21:54 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/20 14:13:31 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:30:47 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@ int	ft_check_death_of_a_philo(t_philo *philo)
 {
 	long	last_meal;
 	
-	pthread_mutex_lock(&(philo->lock_last_meal));
 	last_meal = ft_get_timestamp(philo->rules->start_time) - philo->last_meal; 
 	if (last_meal >= philo->rules->time_die)
 	{
 		philo->is_dead = 1;
 		return (1);
 	}
-	pthread_mutex_unlock(&(philo->lock_last_meal));
 	return (0);
 }
 
@@ -64,6 +62,9 @@ void	*ft_check_death_of_all_philos(void *data)
 		{
 			if (ft_check_death_of_a_philo(&((*philosophes)[id])))
 			{	
+				pthread_mutex_lock(&(rules->lock_death));
+				rules->is_a_dead = 1;
+				pthread_mutex_unlock(&(rules->lock_death));
 				ft_state_msg_death(DEATH, &(*philosophes)[id]);
 				return (NULL) ;
 			}

@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/20 13:38:35 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:28:54 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_rules_philo
 	long			time_eat;
 	long			time_slp;
 	long			time_thk;
+	int				is_a_dead;
 	int				nb_must_eat;
 	struct s_philo	**philosophes;
 	pthread_mutex_t	lock_death;
@@ -70,7 +71,6 @@ typedef struct s_philo
 	int						nb_of_meal;
 	pthread_mutex_t			lock_nb_of_meal;
 	long					last_meal;
-	pthread_mutex_t			lock_last_meal;
 	int						is_dead;
 	pthread_mutex_t			lock_is_dead;
 	int						is_done;

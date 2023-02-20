@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 19:55:51 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/20 13:40:47 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:40:05 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ void	*ft_life_philo(void *data)
 	}
 	while (!philo->is_dead && !philo->is_done)
 	{
-		if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo))
+		if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo) || philo->rules->is_a_dead)
 			break;
 		ft_get_right_fork(philo);
-		if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo))
+		if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo) || philo->rules->is_a_dead)
 			break;
 		ft_get_left_fork(philo);
-		if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo))
+		if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo) || philo->rules->is_a_dead)
 			break;
 		ft_lets_eat(philo);
-		if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo))
+		if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo) || philo->rules->is_a_dead)
 			break;
 		ft_lets_sleep_and_think(philo);
 	}
