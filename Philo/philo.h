@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/20 15:28:54 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/20 20:17:29 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
 # define ERR_GEN_PHILO "An error as occured when generation philosopher\n"
 # define ERR_GEN_FORK "An error as occured when generation philosopher\n"
 # define WRONG_DURATION "Wrong entry parameter : please enter a valid duration\n"
-# define WRONG_PHILO "Wrong entry parameter : please enter a valid number of philosophers\n"
-# define WRONG_NB_MEALS "Wrong entry parameter : please enter a valid number of meals\n"
+# define WRONG_PHILO "Wrong entry parameter : please enter a valid number of \
+philosophers\n"
+# define WRONG_NB_MEALS "Wrong entry parameter : please enter a valid number \
+of meals\n"
 # define DONE_NB_MEALS "The philosopher ate all his meals\n"
 
 # define FORK "has taken a fork"
@@ -38,15 +40,13 @@ time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
 # define DEATH "died"
 # define END "a fini de manger"
 
-
 typedef struct s_fork
 {
 	int				fork_id;
-	int				is_used;
 	pthread_mutex_t	lock_fork;
 }t_fork;
 
-struct s_philo;
+struct	s_philo;
 
 typedef struct s_rules_philo
 {
@@ -62,6 +62,7 @@ typedef struct s_rules_philo
 	struct s_philo	**philosophes;
 	pthread_mutex_t	lock_death;
 	pthread_mutex_t	lock_writing;
+	pthread_mutex_t	lock_access_rules;
 }t_rules_philo;
 
 typedef struct s_philo
@@ -72,12 +73,10 @@ typedef struct s_philo
 	pthread_mutex_t			lock_nb_of_meal;
 	long					last_meal;
 	int						is_dead;
-	pthread_mutex_t			lock_is_dead;
 	int						is_done;
+	pthread_mutex_t			lock_done;
 	struct s_fork			*left_fork;
-	int						left_free;
 	struct s_fork			*right_fork;
-	int						right_free;
 	struct s_rules_philo	*rules;
 	struct s_fork			**forks;
 }t_philo;
@@ -106,9 +105,12 @@ void	*ft_life_philo(void *data);
 int		ft_generate_threads(t_philo **philosophes, t_rules_philo *rules);
 int		ft_join_threads(t_philo **philosophes, t_rules_philo *rules);
 
-void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, int argc, char **argv);
-void	ft_init_philo(t_philo *philosophe, t_fork **forks, int id, t_rules_philo *rules);
+void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, \
+			int argc, char **argv);
+void	ft_init_philo(t_philo *philosophe, t_fork **forks, int id, \
+			t_rules_philo *rules);
 void	ft_init_forks(t_fork *fork, int id);
-void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, t_rules_philo *rules);
+void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, \
+			t_rules_philo *rules);
 
 #endif

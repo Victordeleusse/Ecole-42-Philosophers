@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 12:21:54 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/20 15:30:47 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/20 20:06:17 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 int	ft_check_death_of_a_philo(t_philo *philo)
 {
 	long	last_meal;
-	
-	last_meal = ft_get_timestamp(philo->rules->start_time) - philo->last_meal; 
-	if (last_meal >= philo->rules->time_die)
+	long	time_to_die;
+
+	pthread_mutex_lock(&(philo->rules->lock_death));
+	time_to_die = philo->rules->time_die;
+	pthread_mutex_unlock(&(philo->rules->lock_death));
+	pthread_mutex_lock(&(philo->rules->lock_access_rules));
+	last_meal = ft_get_timestamp(philo->rules->start_time) - philo->last_meal;
+	pthread_mutex_unlock(&(philo->rules->lock_access_rules));
+	if (last_meal >= time_to_die)
 	{
 		philo->is_dead = 1;
 		return (1);
@@ -28,13 +34,15 @@ int	ft_check_death_of_a_philo(t_philo *philo)
 int	ft_check_all_philos_are_done(t_philo **philo)
 {
 	int				id;
-	t_rules_philo	*rules;
-	
+	int				number;
+
 	id = 0;
-	rules = (*philo)->rules;
-	while (id < rules->philo_nb)
+	pthread_mutex_lock(&((*philo)->rules->lock_access_rules));
+	number = (*philo)->rules->philo_nb;
+	pthread_mutex_unlock(&((*philo)->rules->lock_access_rules));
+	while (id < number)
 	{
-		if ((*philo)[id].is_done == 1)
+		if (ft_check_done_philo(&((*philo)[id])))
 			id++;
 		else
 			return (0);
@@ -42,15 +50,23 @@ int	ft_check_all_philos_are_done(t_philo **philo)
 	return (1);
 }
 
+static void	ft_behaviour_after_death(t_rules_philo *rules, t_philo *philo)
+{
+	pthread_mutex_lock(&(rules->lock_death));
+	rules->is_a_dead = 1;
+	ft_state_msg_death(DEATH, philo);
+	pthread_mutex_unlock(&(rules->lock_death));
+	pthread_mutex_unlock(&(philo->right_fork->lock_fork));
+	pthread_mutex_unlock(&(philo->left_fork->lock_fork));
+}
+
 void	*ft_check_death_of_all_philos(void *data)
 {
 	t_philo			**philosophes;
 	t_rules_philo	*rules;
 	int				id;
-	int				stop;
 
 	id = 0;
-	stop = 0;
 	philosophes = (t_philo **)(data);
 	rules = (*philosophes)->rules;
 	while (1)
@@ -62,11 +78,8 @@ void	*ft_check_death_of_all_philos(void *data)
 		{
 			if (ft_check_death_of_a_philo(&((*philosophes)[id])))
 			{	
-				pthread_mutex_lock(&(rules->lock_death));
-				rules->is_a_dead = 1;
-				pthread_mutex_unlock(&(rules->lock_death));
-				ft_state_msg_death(DEATH, &(*philosophes)[id]);
-				return (NULL) ;
+				ft_behaviour_after_death(rules, &(*philosophes)[id]);
+				return (NULL);
 			}
 			id++;
 		}
