@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/21 15:16:20 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/21 15:20:02 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, \
 		i++;
 	}
 	ft_init_rules_part2(rules, philosophes, argc, argv);
-	return(0);
+	return (0);
 }
 
 void	ft_init_philo(t_philo *philosophe, t_fork **forks, int id, \
