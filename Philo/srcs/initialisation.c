@@ -6,14 +6,14 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/21 15:20:02 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/21 15:31:06 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static void	ft_init_rules_part2(t_rules_philo *rules, \
-	t_philo **philosophes, int argc, char **argv)
+	t_philo **philosophes, char **argv)
 {
 	rules->philo_nb = (int)ft_atol(argv[1]);
 	rules->time_die = ft_atol(argv[2]);
@@ -53,7 +53,7 @@ int	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, \
 			return (msg_error(WRONG_DURATION), 1);
 		i++;
 	}
-	ft_init_rules_part2(rules, philosophes, argc, argv);
+	ft_init_rules_part2(rules, philosophes, argv);
 	return (0);
 }
 
