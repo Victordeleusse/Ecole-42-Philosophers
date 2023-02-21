@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 20:44:45 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/21 14:33:33 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:38:54 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ of meals\n"
 typedef struct s_fork
 {
 	int				fork_id;
-	// int				is_used;
 	pthread_mutex_t	lock_fork;
 }t_fork;
 

@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 19:55:51 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/21 14:32:28 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:50:41 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,25 @@ static void	ft_odd_life(t_philo *philo)
 	}
 }
 
-void	*ft_life_philo(void *data)
+static void	ft_one_philo(t_philo *philo)
 {
-	t_philo	*philo;
 	int		number;
 	long	time_to_die;
 
-	philo = (t_philo *)data;
 	pthread_mutex_lock(&philo->rules->lock_access_rules);
 	number = philo->rules->philo_nb;
 	time_to_die = philo->rules->time_die;
 	pthread_mutex_unlock(&philo->rules->lock_access_rules);
 	if (number == 1)
 		ft_usleep(time_to_die + 200);
+}
+
+void	*ft_life_philo(void *data)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)data;
+	ft_one_philo(philo);
 	ft_odd_life(philo);
 	while (!ft_check_done_philo(philo) && !ft_check_death_of_a_philo(philo))
 	{
