@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 19:55:51 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/21 14:50:41 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/21 15:00:43 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,46 @@ static void	ft_one_philo(t_philo *philo)
 		ft_usleep(time_to_die + 200);
 }
 
+static int	ft_odd_philo_out(t_philo *philo)
+{
+	if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo) \
+			|| philo->rules->is_a_dead)
+		return (1);
+	ft_get_left_fork(philo);
+	if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo) \
+		|| philo->rules->is_a_dead)
+	{	
+		pthread_mutex_unlock(&(philo->left_fork->lock_fork));
+		return (1);
+	}
+	ft_get_right_fork(philo);
+	return (0);
+}
+
+static int	ft_even_odd_philo_out(t_philo *philo)
+{
+	if ((philo->philo_id % 2))
+	{
+		if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo) \
+			|| philo->rules->is_a_dead)
+			return (1);
+		ft_get_right_fork(philo);
+		if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo) \
+			|| philo->rules->is_a_dead)
+		{
+			pthread_mutex_unlock(&(philo->right_fork->lock_fork));
+			return (1);
+		}	
+		ft_get_left_fork(philo);
+	}
+	else
+	{	
+		if (ft_odd_philo_out(philo))
+			return (1);
+	}
+	return (0);
+}
+
 void	*ft_life_philo(void *data)
 {
 	t_philo	*philo;
@@ -43,34 +83,8 @@ void	*ft_life_philo(void *data)
 	ft_odd_life(philo);
 	while (!ft_check_done_philo(philo) && !ft_check_death_of_a_philo(philo))
 	{
-		if ((philo->philo_id % 2))
-		{
-			if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo) \
-				|| philo->rules->is_a_dead)
-				break ;
-			ft_get_right_fork(philo);
-			if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo) \
-				|| philo->rules->is_a_dead)
-			{
-				pthread_mutex_unlock(&(philo->right_fork->lock_fork));
-				break ;
-			}	
-			ft_get_left_fork(philo);
-		}
-		else
-		{
-			if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo) \
-				|| philo->rules->is_a_dead)
-				break ;
-			ft_get_left_fork(philo);
-			if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo) \
-				|| philo->rules->is_a_dead)
-			{	
-				pthread_mutex_unlock(&(philo->left_fork->lock_fork));
-				break ;
-			}
-			ft_get_right_fork(philo);
-		}
+		if (ft_even_odd_philo_out(philo))
+			break ;
 		if (ft_check_done_philo(philo) || ft_check_death_of_a_philo(philo) \
 			|| philo->rules->is_a_dead)
 		{	
