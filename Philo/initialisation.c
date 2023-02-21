@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 10:19:13 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/21 14:33:38 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/21 15:16:20 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,30 +30,31 @@ static void	ft_init_rules_part2(t_rules_philo *rules, \
 	pthread_mutex_init(&(rules->lock_writing), NULL);
 }
 
-void	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, \
+int	ft_init_rules(t_rules_philo *rules, t_philo **philosophes, \
 	int argc, char **argv)
 {
 	int	i;
 
 	i = 2;
 	if (argc < 5 || argc > 6)
-		msg_error(ERR_INPUT);
+		return (msg_error(ERR_INPUT), 1);
 	if (bool_empty_false_data(argv[1]) == 0 || ft_atol(argv[1]) == 0)
-		msg_error(WRONG_PHILO);
+		return (msg_error(WRONG_PHILO), 1);
 	rules->nb_must_eat = 9999999;
 	if (argc == 6)
 	{
 		if (bool_empty_false_data(argv[5]) == 0 || ft_atol(argv[5]) == 0)
-			msg_error(WRONG_NB_MEALS);
+			return (msg_error(WRONG_NB_MEALS), 1);
 		rules->nb_must_eat = (int)ft_atol(argv[5]);
 	}
 	while (i < 5)
 	{
 		if (bool_empty_false_data(argv[i]) == 0 || ft_atol(argv[i]) == 0)
-			msg_error(WRONG_DURATION);
+			return (msg_error(WRONG_DURATION), 1);
 		i++;
 	}
 	ft_init_rules_part2(rules, philosophes, argc, argv);
+	return(0);
 }
 
 void	ft_init_philo(t_philo *philosophe, t_fork **forks, int id, \
@@ -81,7 +82,7 @@ void	ft_init_forks(t_fork *fork, int id)
 	pthread_mutex_init(&(fork->lock_fork), NULL);
 }
 
-void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, \
+int	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, \
 	t_rules_philo *rules)
 {
 	int	id;
@@ -90,14 +91,14 @@ void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, \
 	if (!(*philosophes))
 	{	
 		perror(ERR_GEN_PHILO);
-		exit(1);
+		return (1);
 	}	
 	*forks = (t_fork *)malloc(sizeof(t_fork) * rules->philo_nb);
 	if (!(*forks))
 	{
 		free(*philosophes);
 		perror(ERR_GEN_FORK);
-		exit(1);
+		return (1);
 	}
 	id = 0;
 	while (id < rules->philo_nb)
@@ -106,4 +107,5 @@ void	ft_generate_philos_forks(t_philo **philosophes, t_fork **forks, \
 		ft_init_philo(&((*philosophes)[id]), forks, id, rules);
 		id++;
 	}
+	return (0);
 }
