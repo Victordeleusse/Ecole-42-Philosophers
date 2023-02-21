@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 12:21:54 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/20 20:06:17 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:33:59 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ static void	ft_behaviour_after_death(t_rules_philo *rules, t_philo *philo)
 	rules->is_a_dead = 1;
 	ft_state_msg_death(DEATH, philo);
 	pthread_mutex_unlock(&(rules->lock_death));
-	pthread_mutex_unlock(&(philo->right_fork->lock_fork));
-	pthread_mutex_unlock(&(philo->left_fork->lock_fork));
 }
 
 void	*ft_check_death_of_all_philos(void *data)

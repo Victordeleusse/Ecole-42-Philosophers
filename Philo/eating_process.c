@@ -6,7 +6,7 @@
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 11:17:31 by vde-leus          #+#    #+#             */
-/*   Updated: 2023/02/20 20:16:57 by vde-leus         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:16:07 by vde-leus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	ft_get_left_fork(t_philo *philo)
 		ft_state_msg(FORK, philo);
 	}
 }
+
 
 void	ft_lets_eat(t_philo *philo)
 {
